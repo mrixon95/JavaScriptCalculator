@@ -1,0 +1,67 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
+    font-weight:normal;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-image: url("math.jpg"); /* The image used */
+    background-color: #cccccc; /* Used if the image is unavailable */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.calculator-grid {
+    display:grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 200px);
+    grid-template-rows: minmax(200px, auto) repeat(5, 100px);
+}
+
+.calculator-grid > button {
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 2rem;
+    border: 3px solid white;
+    outline: none;
+    background-color: rgba(255,255,255,.9);
+}
+
+.calculator-grid > button:hover {
+background-color: rgba(207, 206, 204, 0.9);
+font-size: 50px;
+color: rgba(7, 6, 6, 0.678);
+}
+
+.span-two {
+    grid-column: 2 span;
+}
+
+.output {
+    grid-column: 1 / -1;
+    background-color: #000000;
+    border-radius: 15px;
+    border: 5px solid white;
+    padding: 5px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-direction: column;
+    word-wrap: break-word;
+    word-break: break;
+}
+
+.output .previous-operand {
+    color: rgba(216, 214, 214, 0.925);
+    font-size: 1.5rem;
+}
+
+.output .current-operand {
+    color: rgba(255,255,255,1);
+    font-size: 2.5rem;
+}
