@@ -6,38 +6,64 @@ const allClearButton = document.querySelector('[data-all-clear]');
 const previousOperandTextElement = document.querySelector('[data-previous-operand]');
 const currOperandTextElement = document.querySelector('[data-current-operand]');
 
-var currentValue = 0
+var total = null;
+var currentValue = "";
 var currentOperator = null;
 
+deleteButton.addEventListener('click', event => {
+    let currText = currOperandTextElement.innerHTML;
+    currOperandTextElement.innerHTML = currText.substring(0,currText.length - 1);
+});
+
+
+allClearButton.addEventListener('click', event => {
+    currOperandTextElement.innerHTML = "";
+    total = null;
+    currentValue = "";
+    currentOperator = null;
+});
+
 equalsButton.addEventListener('click', event => {
-    currOperandTextElement.innerHTML = currentValue;
-    currentValue = 0;
+
+
+    switch (currentOperator) {
+        case "+":
+            total = parseInt(total) + parseInt(currentValue);
+            break;
+        case "-":
+            total = parseInt(total) - parseInt(currentValue);
+            break;
+        case "*":
+            total = parseInt(total) * parseInt(currentValue);
+            break;
+        case "/":
+            total = parseInt(total) / parseInt(currentValue);
+            break;
+        default:
+            total = parseInt(currentValue);
+            break;
+
+
+    }
+
+    currOperandTextElement.innerHTML = total;
+    currentValue = "";
+
+    console.log("total " + total);
+    console.log("currentValue " + currentValue);
+    console.log("currentOperator " + currentOperator);
 
 });
 
 numberButtons.forEach(item => {
     item.addEventListener('click', event => {
         var numAsStr = item.innerHTML;
-        var num = parseInt(numAsStr);
+        currentValue += numAsStr;
+        currOperandTextElement.innerHTML += numAsStr;
+        console.log("total " + total);
+        console.log("currentValue " + currentValue);
+        console.log("currentOperator " + currentOperator);
 
-        currOperandTextElement.innerHTML += item.innerHTML;
-        if (currentOperator != null) {
-            switch(currentOperator) {
-                case '+':
-                    currentValue += num;
-                    break;
-                case '-':
-                    currentValue -= num;
-                    break;
-                case '*':
-                    currentValue *= num;
-                    break;
-                case '/':
-                    currentValue /= num;
-                    break;
-            }
-            currentOperator = null;
-        }
     }
     )
 });
@@ -45,34 +71,43 @@ numberButtons.forEach(item => {
 operationButtons.forEach(item => {
     item.addEventListener('click', event => {
         
+        
         if (item.innerHTML == ".") {
             currOperandTextElement.innerHTML += ".";
         } else {
+            if (total == null) {
+                total = currentValue;
+            }
+
+            if (isNaN(currentValue)) {
+                switch (currentOperator) {
+                    case ("+"):
+                        total = parseInt(total) + parseInt(currentValue);
+                        break;
+                    case ("-"):
+                        total = parseInt(total) - parseInt(currentValue);
+                        break;
+                    case ("*"):
+                        total = parseInt(total) * parseInt(currentValue);
+                        break;
+                    case ("/"):
+                        total = parseInt(total) / parseInt(currentValue);
+                        break;
+    
+                }
+            }
+
             currOperandTextElement.innerHTML += " " + item.innerHTML + " ";
-            currentOperator = currOperandTextElement.innerHTML;
+            currentOperator = item.innerHTML;
+            currentValue = "";
         }
+
+
+        console.log("total " + total);
+    console.log("currentValue " + currentValue);
+    console.log("currentOperator " + currentOperator);
         
     }
     )
 });
 
-
-deleteButtons.addEventListener('click', event => {
-    let currText = currOperandTextElement.innerHTML;
-    currOperandTextElement.innerHTML = currText.substring(0,currText.length - 1);
-});
-
-deleteButtons.addEventListener('click', event => {
-    let currText = currOperandTextElement.innerHTML;
-    currOperandTextElement.innerHTML = currText.substring(0,currText.length - 1);
-});
-
-
-deleteButtons.addEventListener('click', event => {
-    let currText = currOperandTextElement.innerHTML;
-    currOperandTextElement.innerHTML = currText.substring(0,currText.length - 1);
-});
-
-allClearButton.addEventListener('click', event => {
-    currOperandTextElement.innerHTML = "";
-});
