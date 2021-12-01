@@ -57,6 +57,9 @@ equalsButton.addEventListener('click', event => {
         case "/":
             total = parseFloat(total) / parseFloat(currentValue);
             break;
+        case "^":
+            total = Math.pow(total, currentValue);
+            break;    
         default:
             total = parseFloat(currentValue);
             break;
@@ -111,6 +114,9 @@ operationButtons.forEach(item => {
                         break;
                     case ("/"):
                         total = parseInt(total) / parseInt(currentValue);
+                        break;
+                    case ("^"):
+                        total = Math.power(parseInt(total),parseInt(currentValue));
                         break;
     
                 }
