@@ -38,6 +38,12 @@ font-size: 50px;
 color: rgba(7, 6, 6, 0.678);
 }
 
+    .calculator-grid > button:active {
+        background-color: rgba(203, 203, 209, 0.9);
+        font-size: 50px;
+        color: rgba(7, 6, 6, 0.678);
+    }
+
 .span-two {
     grid-column: 2 span;
 }
