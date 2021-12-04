@@ -8,15 +8,32 @@ const currOperandTextElement = document.querySelector('[data-current-operand]');
 const dotpointButton = document.querySelector('[data-dotpoint]');
 
 
-var total = null;
+var total = 0;
 var currentValue = "";
-var currentOperator = null;
+var currentOperator = "+";
 var equation = null;
 
+
+
+function getDisplayNumber(number) 
+{
+    const floatNumber = parseFloat(number);
+    if (isNaN(floatNumber)) {
+        return '';
+    } else {
+        return floatNumber.toLocaleString('en');
+    }
+};
+
+
+
 deleteButton.addEventListener('click', event => {
-    let currText = currOperandTextElement.innerHTML;
-    currOperandTextElement.innerHTML = currText.substring(0,currText.length - 1);
+    total = 0;
+    currentValue = currentValue.substring(0,currentValue.length - 1)
+    currOperandTextElement.innerHTML = getDisplayNumber(currentValue);
 });
+
+
 
 dotpointButton.addEventListener('click', event => {
 
@@ -33,15 +50,19 @@ dotpointButton.addEventListener('click', event => {
 allClearButton.addEventListener('click', event => {
     previousOperandTextElement.innerHTML = "";
     currOperandTextElement.innerHTML = "";
-    total = null;
+    total = 0;
     currentValue = "";
-    currentOperator = null;
+    currentOperator = "+";
     console.log("total " + total);
     console.log("currentValue " + currentValue);
     console.log("currentOperator " + currentOperator);
 });
 
 equalsButton.addEventListener('click', event => {
+
+    if (total === 0 || currentValue === "") {
+        return;
+    }
 
 
     switch (currentOperator) {
@@ -64,8 +85,10 @@ equalsButton.addEventListener('click', event => {
             total = parseFloat(currentValue);
             break;
 
-
     }
+
+    total = getDisplayNumber(total);
+
 
     previousOperandTextElement.innerHTML = currOperandTextElement.innerHTML;
     currOperandTextElement.innerHTML = total;
@@ -74,6 +97,8 @@ equalsButton.addEventListener('click', event => {
     console.log("total " + total);
     console.log("currentValue " + currentValue);
     console.log("currentOperator " + currentOperator);
+    console.log("previousOperandTextElement.innerHTML " + previousOperandTextElement.innerHTML);
+    console.log("currOperandTextElement.innerHTML " + currOperandTextElement.innerHTML);
 
 });
 
@@ -86,6 +111,9 @@ numberButtons.forEach(item => {
         console.log("currentValue " + currentValue);
         console.log("currentOperator " + currentOperator);
 
+    console.log("previousOperandTextElement.innerHTML " + previousOperandTextElement.innerHTML);
+    console.log("currOperandTextElement.innerHTML " + currOperandTextElement.innerHTML);
+
     }
     )
 });
@@ -97,8 +125,13 @@ operationButtons.forEach(item => {
         if (item.innerHTML == ".") {
             currOperandTextElement.innerHTML += ".";
         } else {
-            if (total == null) {
-                total = currentValue;
+            if (total == 0) {
+                if (currentOperator === "+") {
+                    total = currentValue;
+                } else {
+                    total = -currentValue;
+                }
+                
             }
 
             if (isNaN(currentValue)) {
